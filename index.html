@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alvex | Smart Electronics Store</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= TOP ANNOUNCEMENT BAR ================= -->
+
+    <div class="top-bar">
+        <div class="container-fluid px-lg-5">
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div class="top-bar-links">
+                    <!-- <span>Free Shipping on All Orders Over $50</span> -->
+                    <span class="separator">|</span>
+                    <span>Easy 30-Day Returns</span>
+                    <span class="separator">|</span>
+                    <span>Shop Smarter. Live Better.</span>
+                </div>
+
+                <div class="top-bar-right storefront-controls" data-storefront-controls>
+                    <label class="storefront-control">
+                        <span class="storefront-control-label">Currency</span>
+                        <select data-storefront-currency aria-label="Currency">
+                            <option value="USD">USD</option>
+                            <option value="KES">KSh</option>
+                        </select>
+                    </label>
+                    <label class="storefront-control">
+                        <span class="storefront-control-label">Language</span>
+                        <select data-storefront-language aria-label="Language">
+                            <option value="en">English</option>
+                            <option value="sw">Kiswahili</option>
+                            <option value="fr">Français</option>
+                        </select>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MAIN NAVIGATION ================= -->
+
+    <nav class="navbar navbar-expand-lg main-navbar sticky-top">
+        <div class="container-fluid px-lg-5">
+
+            <!-- Logo -->
+            <a class="navbar-brand" href="index.html">
+                Alvex<span class="brand-x">.</span>
+                <small>TECH FOR A BRIGHTER YOU</small>
+            </a>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavigation"
+                    aria-controls="mainNavigation"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse" id="mainNavigation">
+
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.php">Shop</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">Categories</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#deals">Deals</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#support">Support</a>
+                    </li>
+
+                </ul>
+
+                <!-- Search -->
+                <form class="search-form me-lg-4" role="search">
+                    <i class="bi bi-search"></i>
+                    <input type="search" placeholder="Search for products..."
+                           aria-label="Search products">
+                </form>
+
+                <!-- User and Cart -->
+                <div class="nav-actions">
+
+                    <a href="login.html" aria-label="My account">
+                        <i class="bi bi-person"></i>
+                    </a>
+
+                    <a href="cart.html" class="cart-link" aria-label="Shopping cart">
+                        <i class="bi bi-cart3"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- ================= HERO SECTION ================= -->
+
+    <section class="hero-section">
+
+        <div class="container-fluid px-lg-5">
+
+            <div class="hero-content">
+
+                <div class="hero-text">
+
+                    <span class="hero-subtitle">NEXT GENERATION TECH</span>
+
+                    <h1>
+                        Smarter Devices<br>
+                        Brighter Days
+                    </h1>
+
+                    <p>
+                        Discover innovative electronics that power
+                        your life, work and play.
+                    </p>
+
+                    <a href="shop.php" class="btn btn-light hero-btn">
+                        Shop Now <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                    <!-- Hero Benefits -->
+                    <div class="hero-benefits">
+
+                        <div>
+                            <i class="bi bi-lightning-charge"></i>
+                            <span>Innovative<br>Technology</span>
+                        </div>
+
+                        <div>
+                            <i class="bi bi-shield-check"></i>
+                            <span>Trusted<br>Quality</span>
+                        </div>
+
+                        <div>
+                            <i class="bi bi-truck"></i>
+                            <span>Faster<br>Delivery</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="device laptop"></div>
+                    <div class="device phone"></div>
+                    <div class="device watch"></div>
+                </div>
+
+                <div class="hero-tagline">
+                    Tech<br>
+                    Without<br>
+                    Limits
+                </div>
+
+            </div>
+
+            <!-- Slider Indicators -->
+            <div class="hero-indicators">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= SHOP BY CATEGORY ================= -->
+
+    <section class="categories-section section-padding" id="categories">
+
+        <div class="container-fluid px-lg-5">
+
+            <div class="section-heading">
+                <h2>Shop by Category</h2>
+                <a href="categories.html">
+                    View All <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="row g-3">
+
+                <!-- Category 1 -->
+                <div class="col-6 col-md-4 col-lg">
+                    <a href="shop.php?category=laptops" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400"
+                             alt="Laptops">
+                        <h6>Laptops <i class="bi bi-chevron-right"></i></h6>
+                    </a>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="col-6 col-md-4 col-lg">
+                    <a href="shop.php?category=smartphones" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400"
+                             alt="Smartphones">
+                        <h6>Smartphones <i class="bi bi-chevron-right"></i></h6>
+                    </a>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="col-6 col-md-4 col-lg">
+                    <a href="shop.php?category=audio" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"
+                             alt="Audio">
+                        <h6>Audio <i class="bi bi-chevron-right"></i></h6>
+                    </a>
+                </div>
+
+                <!-- Category 4 -->
+                <div class="col-6 col-md-4 col-lg">
+                    <a href="shop.php?category=wearables" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"
+                             alt="Smart Watches">
+                        <h6>Wearables <i class="bi bi-chevron-right"></i></h6>
+                    </a>
+                </div>
+
+                <!-- Category 5 -->
+                <div class="col-6 col-md-4 col-lg">
+                    <a href="shop.php?category=gaming" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=400"
+                             alt="Gaming">
+                        <h6>Gaming <i class="bi bi-chevron-right"></i></h6>
+                    </a>
+                </div>
+
+                <!-- Category 6 -->
+                <div class="col-6 col-md-4 col-lg">
+                    <a href="shop.php?category=monitors" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400"
+                             alt="Monitors">
+                        <h6>Monitors <i class="bi bi-chevron-right"></i></h6>
+                    </a>
+                </div>
+
+                <!-- Category 7 -->
+                <div class="col-6 col-md-4 col-lg">
+                    <a href="shop.php?category=smart-home" class="category-card">
+                        <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=400"
+                             alt="Smart Home">
+                        <h6>Smart Home <i class="bi bi-chevron-right"></i></h6>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= FEATURED COLLECTIONS ================= -->
+
+    <section class="featured-section section-padding">
+
+        <div class="container-fluid px-lg-5">
+
+            <div class="section-heading">
+                <h2>Featured Collections</h2>
+                <a href="shop.php">
+                    View All <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="row g-3">
+
+                <!-- Collection 1 -->
+                <div class="col-12 col-md-4">
+
+                    <div class="collection-card collection-laptop">
+
+                        <div class="collection-content">
+                            <h3>Pro Performance<br>Everyday</h3>
+
+                            <p>Laptops for work, play<br>and beyond.</p>
+
+                            <a href="shop.php?category=laptops"
+                               class="btn btn-light btn-sm">
+                                Explore Laptops <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Collection 2 -->
+                <div class="col-12 col-md-4">
+
+                    <div class="collection-card collection-audio">
+
+                        <div class="collection-content">
+                            <h3>Sound<br>Reimagined</h3>
+
+                            <p>Premium audio<br>for a richer you.</p>
+
+                            <a href="shop.php?category=audio"
+                               class="btn btn-light btn-sm">
+                                Shop Audio <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Collection 3 -->
+                <div class="col-12 col-md-4">
+
+                    <div class="collection-card collection-home">
+
+                        <div class="collection-content">
+                            <h3>Live Smarter<br>at Home</h3>
+
+                            <p>Smart devices for<br>a connected life.</p>
+
+                            <a href="shop.php?category=smart-home"
+                               class="btn btn-dark btn-sm">
+                                Shop Smart Home <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= PROMOTIONAL BANNERS ================= -->
+
+    <section class="deals-section section-padding" id="deals">
+
+        <div class="container-fluid px-lg-5">
+
+            <div class="row g-3">
+
+                <!-- Discount Banner -->
+                <div class="col-12 col-lg-7">
+
+                    <div class="deal-banner discount-banner">
+
+                        <div class="deal-content">
+                            <span>LIMITED TIME OFFER</span>
+
+                            <h2>Up to <strong>40% Off</strong></h2>
+
+                            <h5>Top Tech Brands</h5>
+
+                            <a href="deals.html" class="btn btn-dark btn-sm">
+                                Shop Deals <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Gaming Banner -->
+                <div class="col-12 col-lg-5">
+
+                    <div class="deal-banner gaming-banner">
+
+                        <div class="deal-content text-white">
+                            <h2>Upgrade<br>Your Game</h2>
+
+                            <p>Consoles, accessories<br>and more.</p>
+
+                            <a href="shop.php?category=gaming"
+                               class="btn btn-light btn-sm">
+                                Shop Gaming <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= TRENDING PRODUCTS ================= -->
+
+    <section class="trending-section section-padding">
+
+        <div class="container-fluid px-lg-5">
+
+            <div class="section-heading">
+                <h2>Trending Now</h2>
+                <a href="shop.php">
+                    View All <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="row g-3">
+
+                <!-- Product 1 -->
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="product-card">
+
+                        <button class="wishlist-btn" aria-label="Add laptop to wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <a href="product.html?id=1">
+                            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400"
+                                 alt="NovaBook Pro Laptop">
+                        </a>
+
+                        <h6>NovaBook Pro 14"</h6>
+
+                        <div class="product-rating">
+                            ★★★★★ <span>(128)</span>
+                        </div>
+
+                        <p class="product-price" data-base-price="899" data-base-currency="USD">$899.00</p>
+
+                        <button class="btn btn-dark btn-sm add-cart-btn"
+                                data-product-id="1">
+                            Add to Cart
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="product-card">
+
+                        <button class="wishlist-btn" aria-label="Add earbuds to wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <a href="product.html?id=2">
+                            <img src="https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400"
+                                 alt="Pulse Buds Pro">
+                        </a>
+
+                        <h6>Pulse Buds Pro</h6>
+
+                        <div class="product-rating">
+                            ★★★★★ <span>(96)</span>
+                        </div>
+
+                        <p class="product-price" data-base-price="129" data-base-currency="USD">$129.00</p>
+
+                        <button class="btn btn-dark btn-sm add-cart-btn"
+                                data-product-id="2">
+                            Add to Cart
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="product-card">
+
+                        <button class="wishlist-btn" aria-label="Add smartphone to wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <a href="product.html?id=3">
+                            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400"
+                                 alt="Vista X Smartphone">
+                        </a>
+
+                        <h6>Vista X Smartphone</h6>
+
+                        <div class="product-rating">
+                            ★★★★★ <span>(210)</span>
+                        </div>
+
+                        <p class="product-price" data-base-price="699" data-base-currency="USD">$699.00</p>
+
+                        <button class="btn btn-dark btn-sm add-cart-btn"
+                                data-product-id="3">
+                            Add to Cart
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="product-card">
+
+                        <button class="wishlist-btn" aria-label="Add watch to wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <a href="product.html?id=4">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"
+                                 alt="TrackFit Elite Watch">
+                        </a>
+
+                        <h6>TrackFit Elite</h6>
+
+                        <div class="product-rating">
+                            ★★★★★ <span>(74)</span>
+                        </div>
+
+                        <p class="product-price" data-base-price="199" data-base-currency="USD">$199.00</p>
+
+                        <button class="btn btn-dark btn-sm add-cart-btn"
+                                data-product-id="4">
+                            Add to Cart
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="product-card">
+
+                        <button class="wishlist-btn" aria-label="Add controller to wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <a href="product.html?id=5">
+                            <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400"
+                                 alt="PlayMax Controller">
+                        </a>
+
+                        <h6>PlayMax Controller</h6>
+
+                        <div class="product-rating">
+                            ★★★★★ <span>(58)</span>
+                        </div>
+
+                        <p class="product-price" data-base-price="69" data-base-currency="USD">$69.00</p>
+
+                        <button class="btn btn-dark btn-sm add-cart-btn"
+                                data-product-id="5">
+                            Add to Cart
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="product-card">
+
+                        <button class="wishlist-btn" aria-label="Add camera to wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+
+                        <a href="product.html?id=6">
+                            <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=400"
+                                 alt="HomeCam 360">
+                        </a>
+
+                        <h6>HomeCam 360</h6>
+
+                        <div class="product-rating">
+                            ★★★★★ <span>(112)</span>
+                        </div>
+
+                        <p class="product-price" data-base-price="89" data-base-currency="USD">$89.00</p>
+
+                        <button class="btn btn-dark btn-sm add-cart-btn"
+                                data-product-id="6">
+                            Add to Cart
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= STORE BENEFITS ================= -->
+
+    <section class="benefits-section">
+
+        <div class="container-fluid px-lg-5">
+
+            <div class="row g-4">
+
+                <div class="col-6 col-lg-3">
+                    <div class="benefit-item">
+                        <i class="bi bi-truck"></i>
+                        <div>
+                            <h6>Free Shipping</h6>
+                            <p>On orders over $50</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="benefit-item">
+                        <i class="bi bi-shield-check"></i>
+                        <div>
+                            <h6>30-Day Returns</h6>
+                            <p>Hassle-free</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="benefit-item">
+                        <i class="bi bi-headset"></i>
+                        <div>
+                            <h6>24/7 Support</h6>
+                            <p>Always here for you</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="benefit-item">
+                        <i class="bi bi-credit-card"></i>
+                        <div>
+                            <h6>Secure Payments</h6>
+                            <p>Shop with confidence</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= NEWSLETTER ================= -->
+
+    <section class="newsletter-section section-padding" id="support">
+
+        <div class="container-fluid px-lg-5">
+
+            <div class="newsletter-box">
+
+                <div class="newsletter-info">
+                    <i class="bi bi-send"></i>
+
+                    <div>
+                        <h5>Join the Alvex Community</h5>
+                        <p>Get exclusive deals, new arrivals and tech tips straight to your inbox.</p>
+                    </div>
+                </div>
+
+                <form class="newsletter-form">
+
+                    <input type="email"
+                           placeholder="Your email address"
+                           aria-label="Email address"
+                           required>
+
+                    <button type="submit" class="btn btn-primary">
+                        Subscribe
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="main-footer">
+
+        <div class="container-fluid px-lg-5">
+
+            <div class="row g-4">
+
+                <!-- Brand -->
+                <div class="col-12 col-md-4 col-lg-4">
+
+                    <a href="index.html" class="footer-logo">
+                        Alvex<span>.</span>
+                    </a>
+
+                    <p class="footer-description">
+                        Innovative electronics for a smarter,
+                        brighter tomorrow.
+                    </p>
+
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                        <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                    </div>
+
+                </div>
+
+                <!-- Shop -->
+                <div class="col-6 col-md-2">
+
+                    <h6>Shop</h6>
+
+                    <ul>
+                        <li><a href="shop.php">Laptops</a></li>
+                        <li><a href="shop.php">Smartphones</a></li>
+                        <li><a href="shop.php">Audio</a></li>
+                        <li><a href="shop.php">Wearables</a></li>
+                        <li><a href="shop.php">Smart Home</a></li>
+                        <li><a href="shop.php">Gaming</a></li>
+                    </ul>
+
+                </div>
+
+                <!-- Company -->
+                <div class="col-6 col-md-2">
+
+                    <h6>Company</h6>
+
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+
+                </div>
+
+                <!-- Support -->
+                <div class="col-6 col-md-2">
+
+                    <h6>Support</h6>
+
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+
+                </div>
+
+                <!-- App -->
+                <div class="col-6 col-md-2">
+
+                    <h6>Download Our App</h6>
+
+                    <p>Get the best shopping experience on the go.</p>
+
+                    <div class="app-links">
+                        <a href="#"> <i class="bi bi-apple"></i> App Store</a>
+                        <a href="#"> <i class="bi bi-google-play"></i> Google Play</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="footer-bottom">
+
+                <p>&copy; 2026 Alvex. All rights reserved.</p>
+
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <span>|</span>
+                    <a href="#">Terms of Service</a>
+                    <span>|</span>
+                    <a href="#">Sitemap</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+    <!-- Custom JavaScript -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/storefront.js"></script>
+
+</body>
+</html>

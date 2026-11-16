@@ -1,9 +1,7 @@
 
 "use strict";
 
-/* =========================================
-   VOLTIX - MAIN JAVASCRIPT
-========================================= */
+
 
 document.addEventListener("DOMContentLoaded", function () {
 

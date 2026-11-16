@@ -18,7 +18,7 @@ if (!$product_id || $product_id < 1) {
 
 // Fetch product
 try {
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ? AND is_active = 1");
     $stmt->execute([$product_id]);
 
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -26,6 +26,15 @@ try {
     if (!$product) {
         http_response_code(404);
         exit("Product not found.");
+    }
+
+    $imageStmt = $pdo->prepare(
+        'SELECT image_path FROM product_images WHERE product_id = ? ORDER BY sort_order, id'
+    );
+    $imageStmt->execute([$product_id]);
+    $productImages = $imageStmt->fetchAll(PDO::FETCH_COLUMN);
+    if ($productImages === [] && !empty($product['image'])) {
+        $productImages = [$product['image']];
     }
 
 } catch (PDOException $e) {
@@ -103,13 +112,23 @@ try {
             <div class="product-image-container">
 
                 <img
-                    src="<?= htmlspecialchars($product['image'] ?? 'images/placeholder.jpg') ?>"
+                    src="<?= htmlspecialchars($productImages[0] ?? 'images/placeholder.jpg', ENT_QUOTES, 'UTF-8') ?>"
+                    id="mainProductImage"
                     alt="<?= htmlspecialchars($product['name']) ?>"
                     class="img-fluid rounded shadow-sm w-100"
                     style="max-height: 550px; object-fit: cover;"
                 >
 
             </div>
+            <?php if (count($productImages) > 1): ?>
+                <div class="d-flex flex-wrap gap-2 mt-3" aria-label="Product photos">
+                    <?php foreach ($productImages as $imageIndex => $imagePath): ?>
+                        <button class="btn p-0 border product-gallery-thumb" type="button" data-image="<?= htmlspecialchars($imagePath, ENT_QUOTES, 'UTF-8') ?>" aria-label="Show product photo <?= $imageIndex + 1 ?>">
+                            <img src="<?= htmlspecialchars($imagePath, ENT_QUOTES, 'UTF-8') ?>" alt="" style="width:76px;height:68px;object-fit:cover;">
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
         </div>
 
@@ -130,7 +149,12 @@ try {
             </h1>
 
             <h3 class="fw-bold mb-4">
-                KSh <?= number_format((float)$product['price'], 2) ?>
+                <?php if (!empty($product['discount_price'])): ?>
+                    <del class="text-muted fs-5">KSh <?= number_format((float)$product['price'], 2) ?></del>
+                    KSh <?= number_format((float)$product['discount_price'], 2) ?>
+                <?php else: ?>
+                    KSh <?= number_format((float)$product['price'], 2) ?>
+                <?php endif; ?>
             </h3>
 
             <div class="mb-4">
@@ -210,6 +234,13 @@ try {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/storefront.js"></script>
+<script>
+    document.querySelectorAll('.product-gallery-thumb').forEach((button) => {
+        button.addEventListener('click', () => {
+            document.getElementById('mainProductImage').src = button.dataset.image;
+        });
+    });
+</script>
 
 </body>
 </html>

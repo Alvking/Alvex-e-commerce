@@ -2,16 +2,60 @@
 <?php
 require_once __DIR__ . '/config/database.php';
 
-// Fetch products from database
-try {
-    $stmt = $pdo->query(
-        "SELECT * FROM products ORDER BY created_at DESC"
-    );
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$category = trim((string)($_GET['category'] ?? ''));
+$selectedCategory = null;
+$categories = [];
+$products = [];
 
+try {
+    $categories = $pdo->query('SELECT id, name FROM categories ORDER BY name')->fetchAll(PDO::FETCH_ASSOC);
+    if ($category !== '') {
+        if (ctype_digit($category)) {
+            $categoryId = (int)$category;
+            foreach ($categories as $candidate) {
+                if ((int)$candidate['id'] === $categoryId) {
+                    $selectedCategory = $candidate;
+                    break;
+                }
+            }
+        } else {
+            $categorySlug = mb_strtolower(str_replace('-', ' ', $category));
+            foreach ($categories as $candidate) {
+                if (mb_strtolower($candidate['name']) === $categorySlug) {
+                    $selectedCategory = $candidate;
+                    break;
+                }
+            }
+        }
+    }
+
+    $query = "
+        SELECT p.*,
+               COALESCE(
+                   (SELECT pi.image_path FROM product_images pi
+                    WHERE pi.product_id = p.id ORDER BY pi.sort_order, pi.id LIMIT 1),
+                   p.image
+               ) AS display_image
+        FROM products p
+        WHERE p.is_active = 1
+    ";
+    $params = [];
+    if ($category !== '') {
+        if ($selectedCategory === null) {
+            $query .= ' AND 1 = 0';
+        } else {
+            $query .= ' AND p.category_id = ?';
+            $params[] = $selectedCategory['id'];
+        }
+    }
+    $query .= ' ORDER BY p.created_at DESC';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    $products = [];
     error_log($e->getMessage());
+    http_response_code(500);
+    exit('The product catalog could not be loaded. Please try again later.');
 }
 ?>
 
@@ -67,7 +111,7 @@ try {
 <!-- Shop Header -->
 <section class="shop-header text-center py-5">
     <div class="container">
-        <h1 class="fw-bold">Our Collection</h1>
+        <h1 class="fw-bold"><?= $selectedCategory ? htmlspecialchars($selectedCategory['name']) : 'Our Collection' ?></h1>
         <p>Discover products selected just for you.</p>
     </div>
 </section>
@@ -77,16 +121,19 @@ try {
 
     <div class="row mb-4 align-items-center">
         <div class="col-md-6">
-            <h3>Shop All Products</h3>
+            <h3><?= $selectedCategory ? htmlspecialchars($selectedCategory['name']) : 'Shop All Products' ?></h3>
         </div>
 
         <div class="col-md-6">
-            <input
-                type="search"
-                id="productSearch"
-                class="form-control"
-                placeholder="Search products..."
-            >
+            <div class="d-flex gap-2">
+                <select class="form-select" aria-label="Filter by category" onchange="window.location.href=this.value">
+                    <option value="shop.php" <?= $category === '' ? 'selected' : '' ?>>All categories</option>
+                    <?php foreach ($categories as $option): ?>
+                        <option value="shop.php?category=<?= (int)$option['id'] ?>" <?= $selectedCategory && (int)$selectedCategory['id'] === (int)$option['id'] ? 'selected' : '' ?>><?= htmlspecialchars($option['name'], ENT_QUOTES, 'UTF-8') ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <input type="search" id="productSearch" class="form-control" placeholder="Search products..." aria-label="Search products">
+            </div>
         </div>
     </div>
 
@@ -102,7 +149,7 @@ try {
 
                         <a href="product.php?id=<?= (int)$product['id'] ?>">
                             <img
-                                src="<?= htmlspecialchars($product['image'] ?? 'images/placeholder.jpg') ?>"
+                                src="<?= htmlspecialchars($product['display_image'] ?: 'images/placeholder.jpg', ENT_QUOTES, 'UTF-8') ?>"
                                 class="card-img-top"
                                 alt="<?= htmlspecialchars($product['name']) ?>"
                                 style="height:250px; object-fit:cover;"
@@ -116,11 +163,16 @@ try {
                             </h5>
 
                             <p class="text-muted small">
-                                <?= htmlspecialchars($product['description'] ?? '') ?>
+                                <?= htmlspecialchars(mb_strimwidth((string)($product['description'] ?? ''), 0, 130, '…'), ENT_QUOTES, 'UTF-8') ?>
                             </p>
 
                             <h6 class="fw-bold">
-                                KSh <?= number_format((float)$product['price'], 2) ?>
+                                <?php if (!empty($product['discount_price'])): ?>
+                                    <del class="text-muted fw-normal">KSh <?= number_format((float)$product['price'], 2) ?></del>
+                                    KSh <?= number_format((float)$product['discount_price'], 2) ?>
+                                <?php else: ?>
+                                    KSh <?= number_format((float)$product['price'], 2) ?>
+                                <?php endif; ?>
                             </h6>
 
                             <button

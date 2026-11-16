@@ -15,6 +15,7 @@ try {
             stock
         FROM products
         WHERE discount_price IS NOT NULL
+          AND is_active = 1
           AND discount_price > 0
           AND discount_price < price
           AND (stock IS NULL OR stock > 0)

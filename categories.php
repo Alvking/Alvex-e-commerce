@@ -12,7 +12,7 @@ try {
             c.image,
             COUNT(p.id) AS product_count
         FROM categories c
-        LEFT JOIN products p ON p.category_id = c.id
+        LEFT JOIN products p ON p.category_id = c.id AND p.is_active = 1
         GROUP BY c.id, c.name, c.description, c.image
         ORDER BY c.name ASC
     ");

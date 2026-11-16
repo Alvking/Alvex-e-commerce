@@ -1,19 +1,3 @@
-ALTER TABLE products
-ADD COLUMN category_id INT NULL,
-ADD CONSTRAINT fk_product_category
-FOREIGN KEY (category_id)
-REFERENCES categories(id)
-ON DELETE SET NULL;
-
-INSERT INTO categories (name, description, image)
-VALUES
-('Men', 'Explore our mens collection.', 'images/men.jpg'),
-('Women', 'Discover our womens collection.', 'images/women.jpg'),
-('Shoes', 'Find your perfect footwear.', 'images/shoes.jpg'),
-('Accessories', 'Complete your look with accessories.', 'images/accessories.jpg');
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////
 -- ==========================================
 -- 1. CREATE DATABASE
 -- ==========================================
@@ -33,7 +17,7 @@ CREATE TABLE IF NOT EXISTS categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL UNIQUE,
     description TEXT,
-    image VARCHAR(255),
+    image VARCHAR(2048) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
@@ -53,12 +37,13 @@ CREATE TABLE IF NOT EXISTS products (
     name VARCHAR(255) NOT NULL,
     description TEXT,
 
-    image VARCHAR(255),
+    image VARCHAR(2048),
 
     price DECIMAL(10,2) NOT NULL,
     discount_price DECIMAL(10,2) DEFAULT NULL,
 
     stock INT DEFAULT 100,
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -74,6 +59,42 @@ CREATE TABLE IF NOT EXISTS products (
     INDEX idx_product_category (category_id),
     INDEX idx_product_price (price)
 ) ENGINE=InnoDB;
+
+
+-- ==========================================
+-- 3A. PRODUCT IMAGE GALLERY
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS product_images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    image_path VARCHAR(2048) NOT NULL,
+    sort_order TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_product_images_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(id)
+        ON DELETE CASCADE,
+    UNIQUE KEY uq_product_image (product_id, image_path(191)),
+    INDEX idx_product_images_order (product_id, sort_order)
+) ENGINE=InnoDB;
+
+-- Add the archive flag to databases created with an earlier version of this schema.
+SET @has_product_active := (
+    SELECT COUNT(*)
+    FROM information_schema.columns
+    WHERE table_schema = DATABASE()
+      AND table_name = 'products'
+      AND column_name = 'is_active'
+);
+SET @add_product_active_sql := IF(
+    @has_product_active = 0,
+    'ALTER TABLE products ADD COLUMN is_active TINYINT(1) NOT NULL DEFAULT 1 AFTER stock',
+    'SELECT 1'
+);
+PREPARE add_product_active_stmt FROM @add_product_active_sql;
+EXECUTE add_product_active_stmt;
+DEALLOCATE PREPARE add_product_active_stmt;
 
 
 -- ==========================================
@@ -267,3 +288,98 @@ CREATE TABLE IF NOT EXISTS payment_transactions (
     INDEX idx_transaction_status (status)
 
 ) ENGINE=InnoDB;
+
+
+-- ==========================================
+-- 9. SAMPLE PRODUCT CATALOG
+-- Product images are public image URLs or paths relative to the website root.
+-- ==========================================
+
+INSERT INTO categories (name, description, image)
+VALUES
+    ('Laptops', 'Powerful laptops for work, study, and creative projects.', 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800'),
+    ('Smartphones', 'Smartphones for communication, photography, and entertainment.', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800'),
+    ('Audio', 'Headphones and audio gear for music and calls.', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800'),
+    ('Wearables', 'Smart watches and wearable technology.', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800'),
+    ('Gaming', 'Gaming consoles, controllers, and accessories.', 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=800'),
+    ('Smart Home', 'Connected devices for a smarter home.', 'https://images.unsplash.com/photo-1558002038-1055907df827?w=800')
+ON DUPLICATE KEY UPDATE
+    description = VALUES(description),
+    image = VALUES(image);
+
+INSERT INTO products (category_id, sku, name, description, image, price, stock)
+VALUES
+    (
+        (SELECT id FROM categories WHERE name = 'Laptops'),
+        'NOVABOOK-PRO-14',
+        'NovaBook Pro 14-inch Laptop',
+        'A lightweight 14-inch laptop built for everyday productivity. It features a sharp display, fast solid-state storage, and a long-lasting battery for work or study on the go.',
+        'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800',
+        116870.00,
+        25
+    ),
+    (
+        (SELECT id FROM categories WHERE name = 'Audio'),
+        'PULSE-BUDS-PRO',
+        'Pulse Buds Pro',
+        'Wireless earbuds with clear sound, a pocket-sized charging case, and a comfortable fit for music, calls, and travel.',
+        'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=800',
+        16770.00,
+        50
+    ),
+    (
+        (SELECT id FROM categories WHERE name = 'Smartphones'),
+        'VISTA-X-SMARTPHONE',
+        'Vista X Smartphone',
+        'A modern smartphone with a vivid screen, capable cameras, and all-day battery life for staying connected and capturing everyday moments.',
+        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800',
+        90870.00,
+        30
+    ),
+    (
+        (SELECT id FROM categories WHERE name = 'Wearables'),
+        'TRACKFIT-ELITE',
+        'TrackFit Elite Smart Watch',
+        'A versatile smart watch for activity tracking, notifications, and checking your daily progress at a glance.',
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800',
+        25870.00,
+        40
+    ),
+    (
+        (SELECT id FROM categories WHERE name = 'Gaming'),
+        'PLAYMAX-CONTROLLER',
+        'PlayMax Wireless Controller',
+        'A comfortable wireless controller with responsive buttons for gaming at home.',
+        'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=800',
+        8970.00,
+        35
+    ),
+    (
+        (SELECT id FROM categories WHERE name = 'Smart Home'),
+        'HOMECAM-360',
+        'HomeCam 360',
+        'A compact smart-home camera designed to help you keep an eye on your space from one convenient device.',
+        'https://images.unsplash.com/photo-1558002038-1055907df827?w=800',
+        11570.00,
+        20
+    )
+ON DUPLICATE KEY UPDATE
+    category_id = VALUES(category_id),
+    name = VALUES(name),
+    description = VALUES(description),
+    image = VALUES(image),
+    price = VALUES(price),
+    stock = VALUES(stock);
+
+-- Keep existing single-image products visible in the gallery.
+INSERT INTO product_images (product_id, image_path, sort_order)
+SELECT p.id, p.image, 0
+FROM products p
+WHERE p.image IS NOT NULL
+  AND p.image <> ''
+  AND NOT EXISTS (
+      SELECT 1
+      FROM product_images pi
+      WHERE pi.product_id = p.id
+        AND pi.image_path = p.image
+  );

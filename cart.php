@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $stmt = $pdo->prepare(
-                "SELECT id, stock FROM products WHERE id = ?"
+                "SELECT id, stock FROM products WHERE id = ? AND is_active = 1"
             );
 
             $stmt->execute([$productId]);
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $stmt = $pdo->prepare(
-                "SELECT stock FROM products WHERE id = ?"
+                "SELECT stock FROM products WHERE id = ? AND is_active = 1"
             );
 
             $stmt->execute([$productId]);
@@ -167,7 +167,7 @@ if (!empty($_SESSION['cart'])) {
     $placeholders = implode(',', array_fill(0, count($productIds), '?'));
 
     $stmt = $pdo->prepare(
-        "SELECT * FROM products WHERE id IN ($placeholders)"
+        "SELECT * FROM products WHERE id IN ($placeholders) AND is_active = 1"
     );
 
     $stmt->execute($productIds);

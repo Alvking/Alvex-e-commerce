@@ -42,7 +42,7 @@ function getCheckoutProducts($pdo, $cart) {
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
     $stmt = $pdo->prepare(
-        "SELECT * FROM products WHERE id IN ($placeholders)"
+        "SELECT * FROM products WHERE id IN ($placeholders) AND is_active = 1"
     );
 
     $stmt->execute($ids);
@@ -151,6 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$orderPlaced) {
             $stmt = $pdo->prepare(
                 "SELECT * FROM products
                  WHERE id IN ($placeholders)
+                   AND is_active = 1
                  FOR UPDATE"
             );
 

@@ -72,30 +72,25 @@ function admin_header(string $title): void
         <link rel="stylesheet" href="admin.css">
     </head>
     <body class="admin-body">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="index.php">Alvex Admin</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav" aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="adminNav">
-                <div class="navbar-nav me-auto">
-                    <a class="nav-link" href="index.php">Overview</a>
-                    <a class="nav-link" href="products.php">Products</a>
-                    <a class="nav-link" href="categories.php">Categories</a>
-                    <a class="nav-link" href="orders.php">Orders</a>
-                    <a class="nav-link" href="analytics.php">Analytics</a>
-                    <a class="nav-link" href="../shop.php" target="_blank" rel="noopener">View store</a>
-                </div>
-                <?php if (!empty($_SESSION['admin_id'])): ?>
-                    <form method="post" action="logout.php">
-                        <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
-                        <button class="btn btn-outline-light btn-sm" type="submit">Sign out</button>
-                    </form>
-                <?php endif; ?>
-            </div>
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-header">
+            <a class="admin-sidebar-brand" href="index.php">Alvex Admin</a>
         </div>
-    </nav>
+        <nav class="admin-sidebar-nav" aria-label="Admin navigation">
+            <a class="admin-sidebar-link" href="index.php">Overview</a>
+            <a class="admin-sidebar-link" href="products.php">Products</a>
+            <a class="admin-sidebar-link" href="categories.php">Categories</a>
+            <a class="admin-sidebar-link" href="orders.php">Orders</a>
+            <a class="admin-sidebar-link" href="analytics.php">Analytics</a>
+            <a class="admin-sidebar-link" href="../shop.php" target="_blank" rel="noopener">View store</a>
+        </nav>
+        <?php if (!empty($_SESSION['admin_id'])): ?>
+            <form method="post" action="logout.php" class="admin-signout-form">
+                <input type="hidden" name="csrf_token" value="<?= admin_escape(admin_csrf_token()) ?>">
+                <button class="btn admin-signout-btn" type="submit">Sign out</button>
+            </form>
+        <?php endif; ?>
+    </aside>
     <main class="container-fluid admin-main">
         <?php if ($flash !== null): ?>
             <div class="alert alert-<?= admin_escape($flash['type'] ?? 'info') ?> alert-dismissible fade show" role="alert">

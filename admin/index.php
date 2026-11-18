@@ -44,7 +44,7 @@ admin_header('Overview');
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="h5 mb-0">Recent orders</h2>
-            <a href="orders.php">All orders</a>
+            <a class="admin-all-orders-btn" href="orders.php">All orders</a>
         </div>
         <div class="table-responsive">
             <table class="table admin-table align-middle mb-0">

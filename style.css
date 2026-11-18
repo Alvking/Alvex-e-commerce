@@ -409,30 +409,6 @@ input {
   text-align: left;
 }
 
-.hero-indicators {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  gap: 0.55rem;
-  margin-top: -0.55rem;
-  padding-bottom: 1rem;
-}
-
-.hero-indicators span {
-  display: block;
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background: transparent;
-}
-
-.hero-indicators .active {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(255, 255, 255, 0.9);
-}
-
 .section-padding {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
